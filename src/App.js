@@ -14,7 +14,7 @@ export class App extends Component {
         {
             'id': uuid.v4(),
             'title': 'Watch yourself',
-            'completed': false
+            'completed': true
         },
         {
             'id': uuid.v4(),
@@ -22,12 +22,31 @@ export class App extends Component {
             'completed': false
         }
     ]
-}
+  }
+  
+  // Toggle Complete
+  markComplete = (id) => {
+    this.setState({ todos: this.state.todos.map(todo => {
+      if(todo.id === id) {
+        todo.completed = !todo.completed;
+      }
+      return todo
+    }) 
+    });
+  }
 
+  delTodo = (id) => {
+    this.setState({ todos: this.state.todos.filter(todo => {
+      if (todo.id !== id) {
+        return todo
+      }
+    })
+    });
+  }
   render() {
     return (
       <div className="App">
-      <Todo todos={this.state.todos} ></Todo>
+      <Todo todos={this.state.todos} delTodo={this.delTodo} markComplete={this.markComplete}></Todo>
       </div>
     )
   }
